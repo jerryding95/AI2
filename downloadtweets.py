@@ -22,18 +22,19 @@ def get_tweets(username):
 
     # 20 tweets to be extracted 
     number_of_tweets=20
-    tweets = api.user_timeline(screen_name=username,count=number_of_tweets) 
+    #tweets = api.user_timeline(screen_name=username,count=number_of_tweets) 
+    tweets = api.user_timeline(screen_name=username,count=number_of_tweets, tweet_mode='extended')
 
     # Empty Array 
     tmp=[]
 
     # create array of tweet information: username,  
     # tweet id, date/time, text 
-    tweets_for_csv = [tweet.text for tweet in tweets] # CSV file created  
+    tweets_for_csv = [tweet.full_text for tweet in tweets] # CSV file created  
     for j in tweets_for_csv: 
 
         # Appending tweets to the empty array tmp 
-        tmp.append(j)  
+        tmp.append([j,sentimentdeg(j)])  
 
     # Returning the tweets 
     return(tmp) 
